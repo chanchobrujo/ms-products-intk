@@ -4,6 +4,7 @@ import com.demo.products_intk.model.dto.ProductDto;
 import com.demo.products_intk.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ public class ProductController {
     private final IProductService productService;
 
     @GetMapping("find-by-id")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Mono<ProductDto>> findById(@RequestParam String id) {
         return ok(this.productService.findById(id));
     }
